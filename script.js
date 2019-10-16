@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
    const numOfItemsPerPage = 10;
 
    const pageFunctions = {
-
       showPage: (list, page) => {
          //set startIndex to (page parameter * items per page) - items per page
          const startIndex = (page * numOfItemsPerPage) - numOfItemsPerPage;
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const index = (list.indexOf(listItem));
             //if list item index(index meaning[0]) is greater than or equal to start index && less than index, display to page)
             if(index >= startIndex && index < endIndex){
-               
                listItem.style.display = "";
             } else {
                listItem.style.display ="none";
@@ -33,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
       //Pass in list param
       addPaginationLinks: (list) => {
          const numOfPages = Math.ceil(list.length / numOfItemsPerPage);
-         
          //set page to get class page element
          const page = document.querySelector('.page');
          //set div to create div to page
