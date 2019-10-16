@@ -2,46 +2,81 @@
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
-   
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
+
+document.addEventListener('DOMContentLoaded', () => {
+   //set listItems to get all students
+   const studentList = Array.from(document.getElementsByClassName('student-item cf'));
+
+   const numOfItemsPerPage = 10;
+
+   const pageFunctions = {
+
+      showPage: (list, page) => {
+         //set startIndex to (page parameter * items per page) - items per page
+         const startIndex = (page * numOfItemsPerPage) - numOfItemsPerPage;
+         //set endIndex to page parameter * items per page
+         const endIndex = page * numOfItemsPerPage
+         //for each item in studentList
+         list.forEach(listItem => {
+            const index = (list.indexOf(listItem));
+            //if list item index(index meaning[0]) is greater than or equal to start index && less than index, display to page)
+            if(index >= startIndex && index < endIndex){
+               
+               listItem.style.display = "";
+            } else {
+               listItem.style.display ="none";
+            }
+         });
+      },  
+
+      //function addPaginationLinks
+      //Pass in list param
+      addPaginationLinks: (list) => {
+         const numOfPages = Math.ceil(list.length / numOfItemsPerPage);
+         
+         //set page to get class page element
+         const page = document.querySelector('.page');
+         //set div to create div to page
+         const div = document.createElement('div');
+         //set ul to create ul 
+         const ul = document.createElement('ul');
+         //set div class to pagination
+         div.className ='pagination';
+         //append ul to div
+         div.appendChild(ul);
+         for(let i = 0; i < numOfPages; i++) {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = '#';
+            a.textContent = i + 1;
+            li.appendChild(a);
+            ul.appendChild(li);
+         }   
+         //append div to page class element
+         page.appendChild(div); 
+         pageFunctions.aClickHandler();
+      },
+      aClickHandler: () => {
+         const a = Array.from(document.getElementsByTagName('a'));
+      a.forEach(a => {
+         a.addEventListener('click', e => {
+            pageFunctions.showPage(studentList, e.target.textContent)
+         });
+      });
+      }
+   }
+
+   pageFunctions.addPaginationLinks(studentList);
+   pageFunctions.showPage(studentList, 1);
+});
 
 
-/*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
-***/
 
 
 
 
-/*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
-
-   Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function 
-***/
 
 
-
-
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
 
 
 
