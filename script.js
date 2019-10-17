@@ -8,7 +8,62 @@ document.addEventListener('DOMContentLoaded', () => {
    const studentList = Array.from(document.getElementsByClassName('student-item cf'));
    const numOfItemsPerPage = 10;
    const pageFunctions = {
+      //function addPaginationLinks
+      //Pass in list param
+      addPaginationLinks: (list) => {
+         helperFunctions.appendPaginationLinksToPage(list);
+      },
       showPage: (list, page) => {
+         helperFunctions.displayPage(list, page);
+         helperFunctions.aTagClickHandler();
+      }
+   }
+   //Alphabetized
+   const helperFunctions = {
+      aTagClickHandler: () => {
+         const a = [...document.getElementsByTagName('a')];    
+      a.forEach(a => {
+         a.addEventListener('click', e => {
+            pageFunctions.showPage(studentList, e.target.textContent)
+            e.target.className = 'active';   
+         });
+         a.className = ' ';
+      });
+      },
+      //add class to first a tag
+      activeClass: () => {
+         const activeClass = document.getElementsByTagName('a');
+         const arr = [...activeClass];
+               arr[0].className = 'active';
+      },
+      appendPaginationLinksToPage: (list) => {
+         const numOfPages = Math.ceil(list.length / numOfItemsPerPage);
+         //set page to get class page element
+         const page = document.querySelector('.page');
+         //set div to create div to page
+         const div = document.createElement('div');
+         //set ul to create ul 
+         const ul = document.createElement('ul');
+         //set div class to pagination
+         div.className ='pagination';
+         //append ul to div
+         div.appendChild(ul);
+         for(let i = 0; i < numOfPages; i++) {
+            helperFunctions.createPaginationLinks(ul, i);
+         }
+         //append div to page class element
+         page.appendChild(div); 
+      },
+      //loop over a elements and add clickHandler
+      createPaginationLinks: (ul,i) => {
+         const li = document.createElement('li');
+         const a = document.createElement('a');
+         a.href = '#';
+         a.textContent = i + 1;
+         li.appendChild(a);
+         ul.appendChild(li);
+      },
+      displayPage: (list, page) => {
          //set startIndex to (page parameter * items per page) - items per page
          const startIndex = (page * numOfItemsPerPage) - numOfItemsPerPage;
          //set endIndex to page parameter * items per page
@@ -23,56 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
                listItem.style.display ="none";
             }
          });
-         pageFunctions.aClickHandler();
-      },  
-      //function addPaginationLinks
-      //Pass in list param
-      addPaginationLinks: (list) => {
-         const numOfPages = Math.ceil(list.length / numOfItemsPerPage);
-         //set page to get class page element
-         const page = document.querySelector('.page');
-         //set div to create div to page
-         const div = document.createElement('div');
-         //set ul to create ul 
-         const ul = document.createElement('ul');
-         //set div class to pagination
-         div.className ='pagination';
-         //append ul to div
-         div.appendChild(ul);
-         for(let i = 0; i < numOfPages; i++) {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.href = '#';
-            a.textContent = i + 1;
-            li.appendChild(a);
-            ul.appendChild(li);
-
-         }
-
-         //append div to page class element
-         page.appendChild(div); 
-      },
-      //loop over a elements and add clickHandler
-      aClickHandler: () => {
-         const a = [...document.getElementsByTagName('a')];    
-      a.forEach(a => {
-         a.addEventListener('click', e => {
-            pageFunctions.showPage(studentList, e.target.textContent)
-            e.target.className = 'active';   
-         });
-         a.className = ' ';
-      });
-      },
-      activeClass: () => {
-         const activeClass = document.getElementsByTagName('a');
-         const arr = [...activeClass];
-               arr[0].className = 'active';
       }
    }
-
+   //run functions at page load
    pageFunctions.addPaginationLinks(studentList);
    pageFunctions.showPage(studentList, 1);
-   pageFunctions.activeClass();
+   helperFunctions.activeClass();
    
 });
 
