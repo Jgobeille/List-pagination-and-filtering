@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
       //run functions at page load
       pageFunctions.addPaginationLinks(studentList);
       pageFunctions.showPage(studentList, 1);
-      helperFunctions.activeClass();
       pageFunctions.createSearchFunctionHTML();
-      helperFunctions.searchFunctionHandlers();
+      helperFunctions.activeClass();
+      handlers.searchFunctionHandlers();
    }
 
    const pageFunctions = {
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       showPage: (list, page) => {
          helperFunctions.displayUpToTenItemsPerPage(list, page);
-         helperFunctions.aTagClickHandler();
+         handlers.aTagClickHandler();
       },
       //refactor to make createElement a helper function
       createSearchFunctionHTML: () => {
@@ -45,16 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
    //Alphabetized
    const helperFunctions = {
-      aTagClickHandler: () => {
-         const a = [...document.getElementsByTagName('a')];
-         a.forEach(a => {
-            a.addEventListener('click', e => {
-               pageFunctions.showPage(studentList, e.target.textContent)
-               e.target.className = 'active';
-            });
-            a.className = ' ';
-         });
-      },
       //add class to first a tag
       activeClass: () => {
          const activeClass = document.getElementsByTagName('a');
@@ -110,20 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
          });
       },
-      searchFunctionHandlers: () => {
-         const button = document.querySelector('button');
-         const searchInput = document.querySelector(".input__search-input");
-
-         searchInput.addEventListener('keyup', (e) => {
-            e.preventDefault();
-            helperFunctions.searchFunction(studentList);
-         });
-
-         button.addEventListener('click', e => {
-            e.preventDefault();
-            helperFunctions.searchFunction(studentList);
-         });
-      },
       searchFunction: (list, page) => {
          const searchInput = document.querySelector(".input__search-input");
          list.forEach(listItem => {
@@ -134,10 +110,34 @@ document.addEventListener('DOMContentLoaded', () => {
                listItem.style.display = "none";
             }
          });
-
-
-
       }
+
+   }
+   const handlers = {
+      aTagClickHandler: () => {
+         const a = [...document.getElementsByTagName('a')];
+         a.forEach(a => {
+            a.addEventListener('click', e => {
+               pageFunctions.showPage(studentList, e.target.textContent)
+               e.target.className = 'active';
+            });
+            a.className = ' ';
+         });
+      },
+      searchFunctionHandlers: () => {
+         const button = document.querySelector('button');
+         const searchInput = document.querySelector(".input__search-input");
+         searchInput.addEventListener('keyup', (e) => {
+            e.preventDefault();
+            helperFunctions.searchFunction(studentList);
+         });
+
+         button.addEventListener('click', e => {
+            e.preventDefault();
+            helperFunctions.searchFunction(studentList);
+         });
+      },
+      
 
    }
    callFunctions();
