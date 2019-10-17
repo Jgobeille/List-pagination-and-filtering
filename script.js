@@ -6,9 +6,7 @@ FSJS project 2 - List Filter and Pagination
 document.addEventListener('DOMContentLoaded', () => {
    //set listItems to get all students
    const studentList = Array.from(document.getElementsByClassName('student-item cf'));
-
    const numOfItemsPerPage = 10;
-
    const pageFunctions = {
       showPage: (list, page) => {
          //set startIndex to (page parameter * items per page) - items per page
@@ -25,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
                listItem.style.display ="none";
             }
          });
+         pageFunctions.aClickHandler();
       },  
-
       //function addPaginationLinks
       //Pass in list param
       addPaginationLinks: (list) => {
@@ -48,21 +46,24 @@ document.addEventListener('DOMContentLoaded', () => {
             a.textContent = i + 1;
             li.appendChild(a);
             ul.appendChild(li);
-         }   
+
+         }
          //append div to page class element
          page.appendChild(div); 
-         pageFunctions.aClickHandler();
       },
+      //loop over a elements and add clickHandler
       aClickHandler: () => {
-         const a = Array.from(document.getElementsByTagName('a'));
+         const a = Array.from(document.getElementsByTagName('a'));    
       a.forEach(a => {
          a.addEventListener('click', e => {
             pageFunctions.showPage(studentList, e.target.textContent)
+            e.target.className = 'active';   
          });
+         a.className = ' ';
       });
       }
    }
-
+ 
    pageFunctions.addPaginationLinks(studentList);
    pageFunctions.showPage(studentList, 1);
 });
