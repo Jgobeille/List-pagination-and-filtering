@@ -48,12 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ul.appendChild(li);
 
          }
+
          //append div to page class element
          page.appendChild(div); 
       },
       //loop over a elements and add clickHandler
       aClickHandler: () => {
-         const a = Array.from(document.getElementsByTagName('a'));    
+         const a = [...document.getElementsByTagName('a')];    
       a.forEach(a => {
          a.addEventListener('click', e => {
             pageFunctions.showPage(studentList, e.target.textContent)
@@ -61,11 +62,18 @@ document.addEventListener('DOMContentLoaded', () => {
          });
          a.className = ' ';
       });
+      },
+      activeClass: () => {
+         const activeClass = document.getElementsByTagName('a');
+         const arr = [...activeClass];
+               arr[0].className = 'active';
       }
    }
- 
+
    pageFunctions.addPaginationLinks(studentList);
    pageFunctions.showPage(studentList, 1);
+   pageFunctions.activeClass();
+   
 });
 
 
