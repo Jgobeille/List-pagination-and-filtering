@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
    //set listItems to get all students
    const studentList = [...document.getElementsByClassName('student-item cf')];
    const numOfItemsPerPage = 10;
-   let newList = [];
    const callFunctions = () => {
       //run functions at page load
       pageFunctions.addPaginationLinks(studentList);
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       showPage: (list, page) => {
          helperFunctions.displayUpToTenItemsPerPage(list, page);
-         handlers.aTagClickHandler();
+         handlers.aTagClickHandler(list);
       },
       //refactor to make createElement a helper function
       createSearchFunctionHTML: () => {
@@ -47,9 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
    const helperFunctions = {
       //add class to first a tag
       activeClass: () => {
+         
          const activeClass = document.getElementsByTagName('a');
          const arr = [...activeClass];
-         arr[0].className = 'active';
+         try{
+            //code that causes an error
+            arr[0].className = 'active';
+            }catch(e){
+            
+            }
       },
       appendPaginationLinksToPage: (list) => {
          const numOfPages = Math.ceil(list.length / numOfItemsPerPage);
@@ -59,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
          const div = helperFunctions.createDiv('pagination');
          //set ul to create ul 
          const ul = document.createElement('ul');
+         ul.className= 'pagination__ul';
          //append ul to div
          div.appendChild(ul);
          for (let i = 0; i < numOfPages; i++) {
@@ -100,25 +106,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
          });
       },
-      searchFunction: (list, page) => {
+      searchFunction: (list) => {
+         const newList = [];
+         const num = [];
+         const pagination = document.querySelector('.pagination__ul');
+         pagination.remove();
          const searchInput = document.querySelector(".input__search-input");
          list.forEach(listItem => {
+            listItem.style.display = 'none';
             if (searchInput.value.length !== 0 && listItem.textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
-               listItem.style.display = "";
                newList.push(listItem);
-            } else {
-               listItem.style.display = "none";
             }
          });
+         pageFunctions.showPage(newList, 1);
+         pageFunctions.addPaginationLinks(newList);
+         handlers.aTagClickHandler(newList);
+         helperFunctions.activeClass();
       }
 
    }
    const handlers = {
-      aTagClickHandler: () => {
+      aTagClickHandler: (list) => {
          const a = [...document.getElementsByTagName('a')];
          a.forEach(a => {
             a.addEventListener('click', e => {
-               pageFunctions.showPage(studentList, e.target.textContent)
+               pageFunctions.showPage(list, e.target.textContent)
                e.target.className = 'active';
             });
             a.className = ' ';
