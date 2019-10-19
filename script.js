@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const callFunctions = () => {
     pageFunctions.addPaginationLinks(studentList);
     pageFunctions.showPage(studentList, 1);
-    helperFunctions.activeClass();
     helperFunctions.createNoSearchResultP(p);
     helperFunctions.createSearchFunctionHTML();
     handlers.searchFunctionHandlers();
+    helperFunctions.activeClass();
   };
 
   const pageFunctions = {
@@ -52,11 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
         p.style.display = "none";
       }
       //run necessary functions during search
+
       pageFunctions.showPage(newList, 1);
       pageFunctions.addPaginationLinks(newList);
-      helperFunctions.activeClass();
       helperFunctions.removePaginationUl();
       handlers.aTagClickHandler(newList);
+      helperFunctions.activeClass();
     }
   };
 
