@@ -125,6 +125,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const button = helperFunctions.createElement("button");
       input.placeholder = "Search for students...";
       input.className = "input__search-input";
+      input.name = 'search';
+      input.type ='search';
       button.textContent = "Search";
       div.appendChild(input);
       div.appendChild(button);
