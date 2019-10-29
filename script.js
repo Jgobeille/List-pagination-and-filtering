@@ -46,11 +46,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
       //check if list has items. If array is empty, display hidden p tag. else hide.
-      if (newList.length < 1) {
-        p.style.display = "";
-      } else {
+      if (newList.length > 0) {
         p.style.display = "none";
-      }
+      } else if (searchInput.value == 0) {
+        p.style.display = 'none';
+        pageFunctions.showPage(studentList, 1)
+        } else {
+          p.style.display = '';
+        }
       //run necessary functions during search
 
       pageFunctions.showPage(newList, 1);
