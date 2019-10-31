@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const studentList = [...document.getElementsByClassName("student-item cf")];
   const numOfItemsPerPage = 10;
   const p = document.createElement("p");
+
   //run functions at page load
   const callFunctions = () => {
     pageFunctions.addPaginationLinks(studentList);
@@ -64,11 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const helperFunctions = {
     //add class to first a tag
     activeClass: () => {
-      const activeClass = document.getElementsByTagName("a");
-      const arr = [...activeClass];
-      if (arr.length > 0) {
-        arr[0].className = "active";
-      }
+      const firstA = document.querySelector("a");
+      firstA.className = "active";
     },
     //append pagination links to page
     appendPaginationLinksToPage: list => {
