@@ -79,12 +79,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const ul = helperFunctions.createElement("ul");
       ul.className = "pagination__ul";
       //append ul to div
-      div.appendChild(ul);
+      helperFunctions.appendChild(div, ul);
+      //loop over numOfPages to create page links
       for (let i = 0; i < numOfPages; i++) {
         helperFunctions.createPaginationLinks(ul, i);
       }
       //append div to page class element
-      page.appendChild(div);
+      helperFunctions.appendChild(page, div);
+    },
+    //append child elements to page
+    appendChild: (element, elementToBeAppended) => {
+      element.appendChild(elementToBeAppended);
     },
     //create elements
     createElement: (elementName, property, value) => {
@@ -104,7 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
       p.textContent = "No Students Found";
       p.style.display = "none";
       p.className = "page__studentList__p";
-      classList.appendChild(p);
+      // classList.appendChild(p);
+      helperFunctions.appendChild(classList, p);
     },
     //loop over a elements and add clickHandler
     createPaginationLinks: (ul, i) => {
@@ -112,8 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const a = helperFunctions.createElement("a");
       a.href = "#";
       a.textContent = i + 1;
-      li.appendChild(a);
-      ul.appendChild(li);
+      helperFunctions.appendChild(li, a);
+      helperFunctions.appendChild(ul, li);
     },
     createSearchFunctionHTML: () => {
       const pageHeader = document.getElementsByClassName("page-header")[0];
@@ -125,9 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
       input.name = "search";
       input.type = "search";
       button.textContent = "Search";
-      div.appendChild(input);
-      div.appendChild(button);
-      pageHeader.appendChild(div);
+      helperFunctions.appendChild(div, input);
+      helperFunctions.appendChild(div, button);
+      helperFunctions.appendChild(pageHeader, div);
     },
     displayUpToTenItemsPerPage: (list, page) => {
       //set startIndex to (page parameter * items per page) - items per page
@@ -138,7 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       list.map(listItem => {
         const index = list.indexOf(listItem);
-        // pageFunctions.searchFunction(listItem);
         //if list item index(index meaning[0]) is greater than or equal to start index && less than index, display to page
         const display =
           index >= startIndex && index < endIndex
@@ -156,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const handlers = {
     aTagClickHandler: list => {
       const a = [...document.getElementsByTagName("a")];
-      a.forEach(a => {
+      a.map(a => {
         a.addEventListener("click", e => {
           pageFunctions.showPage(list, e.target.textContent);
           e.target.className = "active";
@@ -167,8 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchFunctionHandlers: () => {
       const button = document.querySelector("button");
       const searchInput = document.querySelector(".input__search-input");
-      searchInput.addEventListener("keyup", e => {
-        e.preventDefault();
+      searchInput.addEventListener("keyup", () => {
         pageFunctions.searchFunction(studentList, p);
       });
 
