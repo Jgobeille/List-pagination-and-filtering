@@ -29,31 +29,27 @@ document.addEventListener("DOMContentLoaded", () => {
       handlers.aTagClickHandler(list);
     },
     searchFunction: (list, p) => {
-      const newList = [];
       const searchInput = document.querySelector(".input__search-input");
       //loop over list items
-      list.forEach(listItem => {
+      newList = list.filter(listItem => {
         //give all items display of none
         listItem.style.display = "none";
-        //search parameters
-        if (
+        return (newList =
           searchInput.value.length !== 0 &&
           listItem.textContent
             .toLowerCase()
-            .includes(searchInput.value.toLowerCase())
-        ) {
-          newList.push(listItem);
-        }
+            .includes(searchInput.value.toLowerCase()));
       });
+
       //check if list has items. If array is empty, display hidden p tag. else hide.
       if (newList.length > 0) {
         p.style.display = "none";
       } else if (searchInput.value == 0) {
-        p.style.display = 'none';
-        pageFunctions.showPage(studentList, 1)
-        } else {
-          p.style.display = '';
-        }
+        p.style.display = "none";
+        pageFunctions.showPage(studentList, 1);
+      } else {
+        p.style.display = "";
+      }
       //run necessary functions during search
 
       pageFunctions.showPage(newList, 1);
@@ -128,8 +124,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const button = helperFunctions.createElement("button");
       input.placeholder = "Search for students...";
       input.className = "input__search-input";
-      input.name = 'search';
-      input.type ='search';
+      input.name = "search";
+      input.type = "search";
       button.textContent = "Search";
       div.appendChild(input);
       div.appendChild(button);
