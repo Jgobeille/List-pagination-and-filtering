@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
       var newList = list.filter(listItem => {
         //give all items display of none
         listItem.style.display = "none";
+        //return all list items that match search function
         return (
           (newList === searchInput.value.length) !== 0 &&
           listItem.textContent
