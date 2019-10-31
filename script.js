@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const studentList = [...document.getElementsByClassName("student-item cf")];
   const numOfItemsPerPage = 10;
   const p = document.createElement("p");
-
   //run functions at page load
   const callFunctions = () => {
     pageFunctions.addPaginationLinks(studentList);
@@ -32,14 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
     searchFunction: (list, p) => {
       const searchInput = document.querySelector(".input__search-input");
       //loop over list items
-      newList = list.filter(listItem => {
+      var newList = list.filter(listItem => {
         //give all items display of none
         listItem.style.display = "none";
-        return (newList =
-          searchInput.value.length !== 0 &&
+        return (
+          (newList === searchInput.value.length) !== 0 &&
           listItem.textContent
             .toLowerCase()
-            .includes(searchInput.value.toLowerCase()));
+            .includes(searchInput.value.toLowerCase())
+        );
       });
 
       //check if list has items. If array is empty, display hidden p tag. else hide.
@@ -136,15 +136,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const endIndex = page * numOfItemsPerPage;
       //for each item in studentList
 
-      list.forEach(listItem => {
+      list.map(listItem => {
         const index = list.indexOf(listItem);
         // pageFunctions.searchFunction(listItem);
         //if list item index(index meaning[0]) is greater than or equal to start index && less than index, display to page
-        if (index >= startIndex && index < endIndex) {
-          listItem.style.display = "";
-        } else {
-          listItem.style.display = "none";
-        }
+        const display =
+          index >= startIndex && index < endIndex
+            ? (listItem.style.display = "")
+            : (listItem.style.display = "none");
       });
     },
     removePaginationUl: () => {
