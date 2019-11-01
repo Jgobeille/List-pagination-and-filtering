@@ -29,17 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
       handlers.aTagClickHandler(list);
     },
     searchFunction: (list, p) => {
-      const searchInput = document.querySelector(".input__search-input");
+      const searchInput = document.querySelector(".student-search");
+      const search = searchInput.children[0];
       //loop over list items
       var newList = list.filter(listItem => {
         //give all items display of none
         listItem.style.display = "none";
         //return all list items that match search function
         return (
-          (newList === searchInput.value.length) !== 0 &&
+          (newList === search.value.length) !== 0 &&
           listItem.textContent
             .toLowerCase()
-            .includes(searchInput.value.toLowerCase())
+            .includes(search.value.toLowerCase())
         );
       });
 
@@ -125,14 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
     createSearchFunctionHTML: () => {
       const pageHeader = document.getElementsByClassName("page-header")[0];
       const div = helperFunctions.createDiv("student-search");
-      const input = helperFunctions.createElement("input");
       const button = helperFunctions.createElement("button");
-      input.placeholder = "Search for students...";
-      input.className = "input__search-input";
-      input.name = "search";
-      input.type = "search";
+      div.insertAdjacentHTML(
+        "beforeEnd",
+        '<input className="input__search-input" name="search" type="search" placeHolder="Search for students...">'
+      );
       button.textContent = "Search";
-      helperFunctions.appendChild(div, input);
       helperFunctions.appendChild(div, button);
       helperFunctions.appendChild(pageHeader, div);
     },
@@ -146,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
       list.map(listItem => {
         const index = list.indexOf(listItem);
         //if list item index(index meaning[0]) is greater than or equal to start index && less than index, display to page
-        const display =
+        const displayOrNotToDisplay =
           index >= startIndex && index < endIndex
             ? (listItem.style.display = "")
             : (listItem.style.display = "none");
@@ -172,8 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     searchFunctionHandlers: () => {
       const button = document.querySelector("button");
-      const searchInput = document.querySelector(".input__search-input");
-      searchInput.addEventListener("keyup", () => {
+      const searchInput = document.querySelector(".student-search");
+      const search = searchInput.children[0];
+      search.addEventListener("keyup", () => {
         pageFunctions.searchFunction(studentList, p);
       });
 
