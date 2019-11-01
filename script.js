@@ -171,9 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     searchFunctionHandlers: () => {
       const button = document.querySelector("button");
-      const searchInput = document.querySelector(".student-search");
-      const search = searchInput.children[0];
-      search.addEventListener("keyup", () => {
+      const search = document.querySelector(".student-search");
+      const searchInput = search.children[0];
+      searchInput.addEventListener("keyup", () => {
         pageFunctions.searchFunction(studentList, p);
       });
 
