@@ -173,6 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const button = document.querySelector("button");
       const search = document.querySelector(".student-search");
       const searchInput = search.children[0];
+      
       searchInput.addEventListener("keyup", () => {
         pageFunctions.searchFunction(studentList, p);
       });
